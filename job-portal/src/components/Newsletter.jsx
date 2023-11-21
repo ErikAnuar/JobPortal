@@ -7,7 +7,7 @@ const Newsletter = () => {
       <div>
         <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
           {" "}
-          <FaEnvelopeOpenText /> Email me for jobs
+          <FaEnvelopeOpenText /> Пишите мне по вопросам работы
         </h3>
         <p className="text-primary/75 text-base mb-4">
           Ut esse eiusmod aute. Sit enim labore dolore. Aute ea fugiat commodo
@@ -30,7 +30,7 @@ const Newsletter = () => {
       {/* 2nd section */}
       <div className="mt-20">
         <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
-          <FaRocket /> Get noticed faster
+          <FaRocket /> Станьте заметным быстрее
         </h3>
         <p className="text-primary/75 text-base mb-4">
           Ut esse eiusmod aute. Sit enim labore dolore. Aute ea fugiat commodo

@@ -44,7 +44,7 @@ const Banner = ({ handleInputChange, query }) => {
             type="submit"
             className="bg-blue py-2 px-8 text-white md:rounded-e-md md:rounded-s-none rounded"
           >
-            Search
+            Поиск
           </button>
         </div>
       </form>

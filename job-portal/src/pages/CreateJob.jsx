@@ -14,7 +14,7 @@ const CreateJob = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset 
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -27,8 +27,8 @@ const CreateJob = () => {
       .then((res) => res.json())
       .then((result) => {
         // console.log(result);
-        if(result.acknowledged === true){
-          alert("Job Posted Successfully!!")
+        if (result.acknowledged === true) {
+          alert("Job Posted Successfully!!");
         }
         reset(); // Reset the form
       });
@@ -51,15 +51,15 @@ const CreateJob = () => {
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
-      {/* <PageHeader title={"Post A Job"} path={"Create Job"} /> */}
+      {/* <PageHeader title={"Опубликовать вакансию"} path={"Создать вакансию"} /> */}
 
-      {/* form */}
+      {/* Форма */}
       <div className="bg-[#FAFAFA] py-10 px-4 lg:px-16">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* 1st row */}
+          {/* 1-я строка */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Title</label>
+              <label className="block mb-2 text-lg">Название вакансии</label>
               <input
                 defaultValue="Web Developer"
                 {...register("jobTitle")}
@@ -67,19 +67,19 @@ const CreateJob = () => {
               />
             </div>
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company Name</label>
+              <label className="block mb-2 text-lg">Название компании</label>
               <input
-                placeholder="Ex: Microsoft"
+                placeholder="Например: Microsoft"
                 {...register("companyName")}
                 className="create-job-input"
               />
             </div>
           </div>
 
-          {/* 2nd row */}
+          {/* 2-я строка */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Minimum Salary</label>
+              <label className="block mb-2 text-lg">Минимальная зарплата</label>
               <input
                 placeholder="$20k"
                 {...register("minPrice")}
@@ -87,7 +87,9 @@ const CreateJob = () => {
               />
             </div>
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Maximum Salary</label>
+              <label className="block mb-2 text-lg">
+                Максимальная зарплата
+              </label>
               <input
                 placeholder="$100k"
                 {...register("maxPrice")}
@@ -96,56 +98,58 @@ const CreateJob = () => {
             </div>
           </div>
 
-          {/* 3rd row */}
+          {/* 3-я строка */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Salary Type</label>
+              <label className="block mb-2 text-lg">Тип зарплаты</label>
               <select {...register("salaryType")} className="create-job-input">
-                <option value="">Choose your salary</option>
-                <option value="Hourly">Hourly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
+                <option value="">Выберите тип зарплаты</option>
+                <option value="Hourly">Почасовая</option>
+                <option value="Monthly">Ежемесячная</option>
+                <option value="Yearly">Ежегодная</option>
               </select>
             </div>
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Location</label>
+              <label className="block mb-2 text-lg">Место работы</label>
               <input
-                placeholder="Ex: New York"
+                placeholder="Например: Нью-Йорк"
                 {...register("jobLocation")}
                 className="create-job-input"
               />
             </div>
           </div>
 
-          {/* 4th row */}
+          {/* 4-я строка */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Posting Date</label>
+              <label className="block mb-2 text-lg">
+                Дата размещения вакансии
+              </label>
               <input
                 className="create-job-input"
                 {...register("postingDate")}
-                placeholder="Ex: 2023-11-03"
+                placeholder="Например: 2023-11-03"
                 type="date"
               />
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Experience Level</label>
+              <label className="block mb-2 text-lg">Уровень опыта</label>
               <select
                 {...register("experienceLevel")}
                 className="create-job-input"
               >
-                <option value="">Select Your Experience Level</option>
-                <option value="NoExperience">No experience</option>
-                <option value="Internship">Internship</option>
-                <option value="Work remotely">Work remotely</option>
+                <option value="">Выберите ваш уровень опыта</option>
+                <option value="NoExperience">Без опыта</option>
+                <option value="Internship">Стажировка</option>
+                <option value="Work remotely">Удаленная работа</option>
               </select>
             </div>
           </div>
 
-          {/* 5th row */}
+          {/* 5-я строка */}
           <div className="">
-            <label className="block mb-2 text-lg">Required Skill Sets:</label>
+            <label className="block mb-2 text-lg">Необходимые навыки:</label>
             <CreatableSelect
               className="create-job-input py-4"
               defaultValue={selectedOption}
@@ -155,53 +159,55 @@ const CreateJob = () => {
             />
           </div>
 
-          {/* 6th row */}
+          {/* 6-я строка */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company Logo</label>
+              <label className="block mb-2 text-lg">Логотип компании</label>
               <input
                 type="url"
-                placeholder="Paste your image url: https://weshare.com/img1.jpg"
+                placeholder="Вставьте URL вашего изображения: https://weshare.com/img1.jpg"
                 {...register("companyLogo")}
                 className="create-job-input"
               />
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Employment Type</label>
+              <label className="block mb-2 text-lg">Тип занятости</label>
               <select
                 {...register("employmentType")}
                 className="create-job-input"
               >
-                <option value="">Select your job type</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Temporary">Temporary</option>
+                <option value="">Выберите тип занятости</option>
+                <option value="Full-time">Полная занятость</option>
+                <option value="Part-time">Частичная занятость</option>
+                <option value="Temporary">Временная работа</option>
               </select>
             </div>
           </div>
 
           {/* 7th row */}
           <div className="w-full">
-          <label className="block mb-2 text-lg">Job Description</label>
-          <textarea
+            <label className="block mb-2 text-lg">Описание вакансии</label>
+            <textarea
               className="w-full pl-3 py-1.5 focus:outline-none"
               rows={6}
               {...register("description")}
-              placeholder="job description"
-              defaultValue={"Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."}
+              placeholder="Описание вакансии"
+              defaultValue={
+                "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+              }
             />
           </div>
 
-          {/* last row */}
+          {/* Последняя строка */}
           <div className="w-full">
-          <label className="block mb-2 text-lg">Job Posted by</label>
-          <input
-          type="email"
+            <label className="block mb-2 text-lg">Опубликовано вакансией</label>
+            <input
+              type="email"
               // value={user?.email}
               className="w-full pl-3 py-1.5 focus:outline-none"
               {...register("postedBy")}
-              placeholder="your email"
+              placeholder="ваш адрес электронной почты"
             />
           </div>
 

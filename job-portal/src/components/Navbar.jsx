@@ -24,31 +24,15 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   const navItems = [
-    { path: "/", title: "Start a search" },
-    { path: "/my-job", title: "My Jobs" },
-    { path: "/salary", title: "Salary estimate" },
-    { path: "/post-job", title: "Post A Job" },
+    { path: "/", title: "Начать поиск" },
+    { path: "/my-job", title: "Мои вакансии" },
+    { path: "/salary", title: "Оценка зарплаты" },
+    { path: "/post-job", title: "Опубликовать вакансию" },
   ];
   return (
     <header className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
       <nav className="flex justify-between items-center py-6">
         <a href="/" className="flex items-center gap-2 text-2xl">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="29"
-            height="30"
-            viewBox="0 0 29 30"
-            fill="none"
-          >
-            <circle
-              cx="12.0143"
-              cy="12.5143"
-              r="12.0143"
-              fill="#3575E2"
-              fillOpacity="0.4"
-            />
-            <circle cx="16.9857" cy="17.4857" r="12.0143" fill="#3575E2" />
-          </svg>
           <span>JobQuest.kz</span>
         </a>
 
@@ -104,13 +88,13 @@ const Navbar = () => {
             <>
               {" "}
               <Link to="/login" className="py-2 px-5 border rounded">
-                Log in
+                Войти
               </Link>
               <Link
                 to="/sign-up"
                 className="bg-blue py-2 px-5 text-white rounded"
               >
-                Sign up
+                Зарегистрироваться
               </Link>
             </>
           )}

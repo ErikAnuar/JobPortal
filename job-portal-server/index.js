@@ -1,18 +1,17 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
-require('dotenv').config()
+require("dotenv").config();
 
 //middleware here
 app.use(express.json());
-app.use(cors())
-
+app.use(cors());
 
 // replace username(${process.env.DB_USER}) and password(${process.env.DB_PASS}) here
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@jobportal.a2ilieo.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb://localhost:27017/JobPortal`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -20,7 +19,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
@@ -28,33 +27,32 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const db = client.db("jobPortal");
+    const db = client.db("JobPortal");
     const jobsCollection = db.collection("jobs");
 
     // Creating index for job sorting last job posted will show first
-    const indexKeys = { title: 1, category: 1 }; 
-    const indexOptions = { name: "titleCategory" }; 
+    const indexKeys = { title: 1, category: 1 };
+    const indexOptions = { name: "titleCategory" };
     const result = await jobsCollection.createIndex(indexKeys, indexOptions);
     // console.log(result);
 
     // post a job
     app.post("/post-job", async (req, res) => {
-        const body = req.body;
-        body.createdAt = new Date();
-        // console.log(body);
-        const result = await jobsCollection.insertOne(body);
-        if (result?.insertedId) {
-          return res.status(200).send(result);
-        } else {
-          return res.status(404).send({
-            message: "can not insert try again leter",
-            status: false,
-          });
-        }
-      });
+      const body = req.body;
+      body.createdAt = new Date();
+      // console.log(body);
+      const result = await jobsCollection.insertOne(body);
+      if (result?.insertedId) {
+        return res.status(200).send(result);
+      } else {
+        return res.status(404).send({
+          message: "can not insert try again leter",
+          status: false,
+        });
+      }
+    });
 
-
-      // get all jobs 
+    // get all jobs
     app.get("/all-jobs", async (req, res) => {
       const jobs = await jobsCollection
         .find({})
@@ -72,7 +70,7 @@ async function run() {
       res.send(jobs);
     });
 
-    // get jobs based on email for my job listing 
+    // get jobs based on email for my job listing
     app.get("/myJobs/:email", async (req, res) => {
       // console.log("email---", req.params.email);
       const jobs = await jobsCollection
@@ -83,14 +81,13 @@ async function run() {
       res.send(jobs);
     });
 
-
     // delete a job
-    app.delete("/job/:id", async(req, res) => {
+    app.delete("/job/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const result = await jobsCollection.deleteOne(filter);
       res.send(result);
-    })
+    });
 
     // updata a job
     app.patch("/update-job/:id", async (req, res) => {
@@ -100,7 +97,7 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
-            ...jobData
+          ...jobData,
         },
       };
       const options = { upsert: true };
@@ -110,7 +107,9 @@ async function run() {
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -118,11 +117,10 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

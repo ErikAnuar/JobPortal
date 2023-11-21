@@ -33,7 +33,6 @@ const Home = () => {
     (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
   );
 
-
   // ----------- Radio Filtering -----------
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -70,14 +69,14 @@ const Home = () => {
     let filteredJobs = jobs;
     // Filtering Input Items
 
-    console.log(filteredItems)
+    console.log(filteredItems);
     if (query) {
       filteredJobs = filteredItems;
     }
 
     // Applying selected filter
     if (selected) {
-      console.log((selected));
+      console.log(selected);
 
       filteredJobs = filteredJobs.filter(
         ({
@@ -92,7 +91,7 @@ const Home = () => {
           postingDate === selected ||
           parseInt(maxPrice) <= parseInt(selected) ||
           salaryType.toLowerCase() === selected.toLowerCase() ||
-         experienceLevel.toLowerCase() === selected.toLowerCase() ||
+          experienceLevel.toLowerCase() === selected.toLowerCase() ||
           employmentType.toLowerCase() === selected.toLowerCase()
       );
       console.log(filteredJobs);
@@ -123,8 +122,10 @@ const Home = () => {
             <Jobs result={result} />
           ) : (
             <>
-              <h3 className="text-lg font-bold mb-2">{result.length} Jobs</h3>
-              <p>No data found</p>
+              <h3 className="text-lg font-bold mb-2">
+                {result.length} Вакансии
+              </h3>
+              <p>Нет данных</p>
             </>
           )}
 
@@ -137,10 +138,10 @@ const Home = () => {
                 disabled={currentPage === 1}
                 className="hover:underline"
               >
-                Previous
+                Назад
               </button>
               <span className="mx-2">
-                Page {currentPage} of{" "}
+                Страница {currentPage} из{" "}
                 {Math.ceil(filteredItems.length / itemsPerPage)}
               </span>
               <button
@@ -150,7 +151,7 @@ const Home = () => {
                 }
                 className="hover:underline"
               >
-                Next
+                Вперёд
               </button>
             </div>
           ) : (
