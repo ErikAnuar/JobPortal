@@ -5,34 +5,34 @@ import InputField from "../components/InputField";
 const Location = ({ handleChange }) => {
   return (
     <div>
-      <h4 className="text-lg font-medium mb-2">Location</h4>
+      <h4 className="text-lg font-medium mb-2">Локация</h4>
       <div>
         <label className="sidebar-label-container">
           <input onChange={handleChange} type="radio" value="" name="test" />
-          <span className="checkmark"></span>All
+          <span className="checkmark"></span>Все
         </label>
         <InputField
           handleChange={handleChange}
           value="london"
-          title="London"
+          title="Astana"
           name="test"
         />
         <InputField
           handleChange={handleChange}
           value="seattle"
-          title="Seattle"
+          title="Almaty"
           name="test"
         />
         <InputField
           handleChange={handleChange}
           value="madrid"
-          title="Madrid"
+          title="Kostanay"
           name="test"
         />
         <InputField
           handleChange={handleChange}
           value="boston"
-          title="Boston"
+          title="Pavlodar"
           name="test"
         />
       </div>
