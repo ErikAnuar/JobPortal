@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { useParams } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa6";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const JobDetails = () => {
     const { value: url } = await Swal.fire({
       input: "url",
       inputLabel: "CV or Resume URL address",
-      inputPlaceholder: "Enter the URL"
+      inputPlaceholder: "Enter the URL",
     });
     if (url) {
       Swal.fire(`Entered URL: ${url}`).then((result) => {
@@ -31,55 +31,62 @@ const JobDetails = () => {
         }
       });
     }
-    
-  }
+  };
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
-      <PageHeader title={"Job Details Page"} path={"Single Job"} />
+      <PageHeader
+        title={"Страница сведений о вакансии"}
+        path={"Одиночная вакансия"}
+      />
 
       <div className="mt-10">
-        <h3 className="font-semibold mb-2">Job ID: {parseInt(id)}</h3>
+        <h3 className="font-semibold mb-2">ID Вакансии: {parseInt(id)}</h3>
 
         <div className="my-4">
-          <h2 className="text-2xl font-medium text-blue">Job details</h2>
+          <h2 className="text-2xl font-medium text-blue">
+            Информация о вакансии
+          </h2>
           <p className="text-primary/75 md:w-1/3 text-sm italic my-1">
-            Here<span>&apos;</span>s how the job details align with your job
-            preferences. Manage job preferences anytime in your profile.
+            Вот как информация о вакансии соответствует вашим предпочтениям.
+            Управляйте предпочтениями вакансий в любое время в своем профиле.
           </p>
         </div>
 
         <div className="my-4 space-y-2">
           <div className="flex items-center gap-2">
             <FaBriefcase />
-            <p className="text-xl font-medium mb-2">Job type</p>
+            <p className="text-xl font-medium mb-2">Тип вакансии</p>
           </div>
           <button className="bg-blue px-6 py-1 text-white rounded-sm">
             {job.employmentType}
           </button>
-          <button className="bg-indigo-700 px-6 py-1 text-white rounded-sm ms-2" onClick={handleJobApply}>
-            Apply Now
+          <button
+            className="bg-indigo-700 px-6 py-1 text-white rounded-sm ms-2"
+            onClick={handleJobApply}
+          >
+            Подать Заявку
           </button>
         </div>
 
         {/* job details */}
         <div className="flex flex-col md:flex-row justify-between gap-12 mt-12">
           <div className="md:w-1/3">
-            <h4 className="text-lg font-medium mb-3">Benefits</h4>
+            <h4 className="text-lg font-medium mb-3">Преимущества</h4>
             <p className="text-sm text-primary/70 mb-2">
-              Pulled from the full job description
+              Извлечено из полного описания вакансии
             </p>
             <ul className="list-disc list-outside text-primary/90 space-y-2 text-base">
               <li>
-                1. ${job.minPrice}-{job.maxPrice}k
+                1. ${job.minPrice}-{job.maxPrice}тыс.
               </li>
-              <li>2. Disability insurance</li>
-              <li>3. Employee discount</li>
-              <li>4. Flexible spending account</li>
-              <li>5. Health insurance</li>
-              <li>6. Paid time off</li>
-              <li>7. Vision insurance</li>
-              <li>8. Volunteer time off</li>
-              <li> 9. Dental insurance</li>
+              <li>2. Страховка от несчастных случаев</li>
+              <li>3. Скидка для сотрудников</li>
+              <li>4. Гибкая система расходов</li>
+              <li>5. Медицинская страховка</li>
+              <li>6. Оплачиваемый отпуск</li>
+              <li>7. Страховка зрения</li>
+              <li>8. Отпуск для волонтеров</li>
+              <li>9. Стоматологическая страховка</li>
             </ul>
           </div>
 
@@ -118,9 +125,36 @@ const JobDetails = () => {
         </div>
 
         <div className="text-primary/75 my-5 space-y-6">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempore alias dolores. Maxime id quas, asperiores dolor illo veritatis quibusdam sint possimus quod hic nulla officiis necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla, cum nostrum. Exercitationem, dolores, tenetur culpa quas perspiciatis, libero iste voluptate totam mollitia facere fugiat fugit veritatis accusantium quae aliquam. Labore?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempore alias dolores. Maxime id quas, asperiores dolor illo veritatis quibusdam sint possimus quod hic nulla officiis necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla, cum nostrum. Exercitationem, dolores, tenetur culpa quas perspiciatis, libero iste voluptate totam mollitia facere fugiat fugit veritatis accusantium quae aliquam. Labore?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempore alias dolores. Maxime id quas, asperiores dolor illo veritatis quibusdam sint possimus quod hic nulla officiis necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla, cum nostrum. Exercitationem, dolores, tenetur culpa quas perspiciatis, libero iste voluptate totam mollitia facere fugiat fugit veritatis accusantium quae aliquam. Labore?</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+            tempore alias dolores. Maxime id quas, asperiores dolor illo
+            veritatis quibusdam sint possimus quod hic nulla officiis
+            necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit
+            amet consectetur adipisicing elit. Nulla, cum nostrum.
+            Exercitationem, dolores, tenetur culpa quas perspiciatis, libero
+            iste voluptate totam mollitia facere fugiat fugit veritatis
+            accusantium quae aliquam. Labore?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+            tempore alias dolores. Maxime id quas, asperiores dolor illo
+            veritatis quibusdam sint possimus quod hic nulla officiis
+            necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit
+            amet consectetur adipisicing elit. Nulla, cum nostrum.
+            Exercitationem, dolores, tenetur culpa quas perspiciatis, libero
+            iste voluptate totam mollitia facere fugiat fugit veritatis
+            accusantium quae aliquam. Labore?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+            tempore alias dolores. Maxime id quas, asperiores dolor illo
+            veritatis quibusdam sint possimus quod hic nulla officiis
+            necessitatibus laudantium expedita commodi?Lorem ipsum, dolor sit
+            amet consectetur adipisicing elit. Nulla, cum nostrum.
+            Exercitationem, dolores, tenetur culpa quas perspiciatis, libero
+            iste voluptate totam mollitia facere fugiat fugit veritatis
+            accusantium quae aliquam. Labore?
+          </p>
         </div>
       </div>
     </div>
