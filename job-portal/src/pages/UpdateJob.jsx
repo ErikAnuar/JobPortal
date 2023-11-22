@@ -3,8 +3,12 @@ import { useForm } from "react-hook-form";
 import { useLoaderData, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import PageHeader from "../components/PageHeader";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import { useTranslation } from "react-i18next";
 
 const UpdateJob = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const {
     companyName,
@@ -12,7 +16,6 @@ const UpdateJob = () => {
     companyLogo,
     minPrice,
     maxPrice,
-    salaryType,
     jobLocation,
     postingDate,
     experienceLevel,
@@ -24,7 +27,7 @@ const UpdateJob = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const {
     register,
@@ -35,49 +38,43 @@ const UpdateJob = () => {
 
   const onSubmit = (data) => {
     data.skills = selectedOption;
-    // console.log(data)
-    // update the book object
     fetch(`http://localhost:5000/update-job/${id}`, {
       method: "PATCH",
-
       headers: {
         "Content-type": "application/json",
       },
-
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
         if (result.acknowledged === true) {
-          alert("Job Updated Successfully!!");
+          alert(t("JobUpdatedSuccessfully"));
         }
       });
   };
 
   const options = [
-    { value: "Communication", label: "Communication" },
-    { value: "ProblemSolving", label: "Problem Solving" },
-    { value: "TimeManagement", label: "Time Management" },
-    { value: "Leadership", label: "Leadership" },
-    { value: "Teamwork", label: "Teamwork" },
-    { value: "Adaptability", label: "Adaptability" },
-    { value: "Creativity", label: "Creativity" },
-    { value: "CriticalThinking", label: "Critical Thinking" },
-    { value: "Organization", label: "Organization" },
-    { value: "Negotiation", label: "Negotiation" },
-    { value: "DecisionMaking", label: "Decision Making" },
-    { value: "EmotionalIntelligence", label: "Emotional Intelligence" },
-    { value: "ConflictResolution", label: "Conflict Resolution" },
-    { value: "Networking", label: "Networking" },
-    { value: "Programming", label: "Programming" },
+    { value: "Communication", label: t("Communication") },
+    { value: "ProblemSolving", label: t("ProblemSolving") },
+    { value: "TimeManagement", label: t("TimeManagement") },
+    { value: "Leadership", label: t("Leadership") },
+    { value: "Teamwork", label: t("Teamwork") },
+    { value: "Adaptability", label: t("Adaptability") },
+    { value: "Creativity", label: t("Creativity") },
+    { value: "CriticalThinking", label: t("CriticalThinking") },
+    { value: "Organization", label: t("Organization") },
+    { value: "Negotiation", label: t("Negotiation") },
+    { value: "DecisionMaking", label: t("DecisionMaking") },
+    { value: "EmotionalIntelligence", label: t("EmotionalIntelligence") },
+    { value: "ConflictResolution", label: t("ConflictResolution") },
+    { value: "Networking", label: t("Networking") },
+    { value: "Programming", label: t("Programming") },
   ];
-
-  // console.log(watch("example"));
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
-      <PageHeader title={"Update This Job"} path={"Edit Job"} />
+      <PageHeader title={t("UpdateThisJob")} path={t("EditJob")} />
 
       {/* form */}
       <div className="bg-[#FAFAFA] py-10 px-4 lg:px-16">
@@ -85,7 +82,7 @@ const UpdateJob = () => {
           {/* 1st row */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Title</label>
+              <label className="block mb-2 text-lg">{t("JobTitle")}</label>
               <input
                 defaultValue={jobTitle}
                 {...register("jobTitle")}
@@ -93,9 +90,9 @@ const UpdateJob = () => {
               />
             </div>
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company Name</label>
+              <label className="block mb-2 text-lg">{t("CompanyName")}</label>
               <input
-                placeholder="Ex: Microsoft"
+                placeholder={t("Ex:Microsoft")}
                 defaultValue={companyName}
                 {...register("companyName")}
                 className="create-job-input"
@@ -106,18 +103,18 @@ const UpdateJob = () => {
           {/* 2nd row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Minimum Salary</label>
+              <label className="block mb-2 text-lg">{t("MinimumSalary")}</label>
               <input
-                placeholder="$20k"
+                placeholder={t("$20k")}
                 defaultValue={minPrice}
                 {...register("minPrice")}
                 className="create-job-input"
               />
             </div>
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Maximum Salary</label>
+              <label className="block mb-2 text-lg">{t("MaximumSalary")}</label>
               <input
-                placeholder="$100k"
+                placeholder={t("$100k")}
                 defaultValue={maxPrice}
                 {...register("maxPrice")}
                 className="create-job-input"
@@ -128,18 +125,9 @@ const UpdateJob = () => {
           {/* 3rd row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Salary Type</label>
-              <select {...register("salaryType")} className="create-job-input">
-                <option value={salaryType}>{salaryType}</option>
-                <option value="Hourly">Hourly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
-              </select>
-            </div>
-            <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Location</label>
+              <label className="block mb-2 text-lg">{t("JobLocation")}</label>
               <input
-                placeholder="Ex: New York"
+                placeholder={t("Ex:NewYork")}
                 defaultValue={jobLocation}
                 {...register("jobLocation")}
                 className="create-job-input"
@@ -150,33 +138,39 @@ const UpdateJob = () => {
           {/* 4th row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Posting Date</label>
+              <label className="block mb-2 text-lg">
+                {t("JobPostingDate")}
+              </label>
               <input
                 className="create-job-input"
                 {...register("postingDate")}
-                placeholder="Ex: 2023-11-03"
+                placeholder={t("Ex:2023-11-03")}
                 type="date"
                 defaultValue={postingDate}
               />
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Experience Level</label>
+              <label className="block mb-2 text-lg">
+                {t("ExperienceLevel")}
+              </label>
               <select
                 {...register("experienceLevel")}
                 className="create-job-input"
               >
                 <option value={experienceLevel}>{experienceLevel}</option>
-                <option value="NoExperience">No experience</option>
-                <option value="Internship">Internship</option>
-                <option value="Work remotely">Work remotely</option>
+                <option value="NoExperience">{t("NoExperience")}</option>
+                <option value="Internship">{t("Internship")}</option>
+                <option value="WorkRemotely">{t("WorkRemotely")}</option>
               </select>
             </div>
           </div>
 
           {/* 5th row */}
           <div className="">
-            <label className="block mb-2 text-lg">Required Skill Sets:</label>
+            <label className="block mb-2 text-lg">
+              {t("RequiredSkillSets")}
+            </label>
             <CreatableSelect
               className="create-job-input py-4"
               defaultValue={skills}
@@ -189,10 +183,10 @@ const UpdateJob = () => {
           {/* 6th row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Company Logo</label>
+              <label className="block mb-2 text-lg">{t("CompanyLogo")}</label>
               <input
                 type="url"
-                placeholder="Paste your image url: https://weshare.com/img1.jpg"
+                placeholder={t("PasteYourImageURL")}
                 {...register("companyLogo")}
                 className="create-job-input"
                 defaultValue={companyLogo}
@@ -200,41 +194,42 @@ const UpdateJob = () => {
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Employment Type</label>
+              <label className="block mb-2 text-lg">
+                {t("employmentType")}
+              </label>
               <select
                 {...register("employmentType")}
                 className="create-job-input"
               >
                 <option value={employmentType}>{employmentType}</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Temporary">Temporary</option>
+                <option value="Full-time">{t("fullTime")}</option>
+                <option value="Part-time">{t("partTime")}</option>
+                <option value="Temporary">{t("temporary")}</option>
               </select>
             </div>
           </div>
 
           {/* 7th row */}
           <div className="w-full">
-            <label className="block mb-2 text-lg">Job Description</label>
+            <label className="block mb-2 text-lg">{t("JobDescription")}</label>
             <textarea
               className="w-full pl-3 py-1.5 focus:outline-none"
               rows={6}
               {...register("description")}
-              placeholder="job description"
+              placeholder={t("JobDescriptionPlaceholder")}
               defaultValue={description}
             />
           </div>
 
           {/* last row */}
           <div className="w-full">
-            <label className="block mb-2 text-lg">Job Posted by</label>
+            <label className="block mb-2 text-lg">{t("JobPostedBy")}</label>
             <input
               type="email"
-              // value={user?.email}
-
+              value={user?.email}
               className="w-full pl-3 py-1.5 focus:outline-none"
               {...register("postedBy")}
-              placeholder="your email"
+              placeholder={t("YourEmail")}
               defaultValue={postedBy}
             />
           </div>

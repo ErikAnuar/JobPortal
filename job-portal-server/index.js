@@ -1,14 +1,13 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = process.env.PORT || 5000;
-require('dotenv').config()
+require("dotenv").config();
 
 //middleware here
 app.use(express.json());
-app.use(cors())
-
+app.use(cors());
 
 // replace username(${process.env.DB_USER}) and password(${process.env.DB_PASS}) here
 
@@ -20,7 +19,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
@@ -30,31 +29,87 @@ async function run() {
 
     const db = client.db("jobPortal");
     const jobsCollection = db.collection("jobs");
+    const usersCollection = db.collection("users");
 
     // Creating index for job sorting last job posted will show first
-    const indexKeys = { title: 1, category: 1 }; 
-    const indexOptions = { name: "titleCategory" }; 
-    const result = await jobsCollection.createIndex(indexKeys, indexOptions);
-    // console.log(result);
+    const indexKeys = { title: 1, category: 1 };
+    const indexOptions = { name: "titleCategory" };
+    await jobsCollection.createIndex(indexKeys, indexOptions);
+    await usersCollection.createIndex({ email: 1 }, { unique: true });
+
+    app.post("/favorite-job", async (req, res) => {
+      const { userEmail, jobId } = req.body;
+
+      // Update the user's favoriteJobs array
+      const result = await usersCollection.updateOne(
+        { email: userEmail },
+        { $addToSet: { favoriteJobs: jobId } } // Use $addToSet to avoid duplicates
+      );
+
+      if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+        return res.status(200).send(result);
+      } else {
+        return res.status(404).send({
+          message: "Can not insert favorite job. Try again later.",
+          status: false,
+        });
+      }
+    });
+
+    app.get("/favorite-jobs/:email", async (req, res) => {
+      const userEmail = req.params.email;
+
+      // Find the user and retrieve their favorite jobs
+      const user = await usersCollection.findOne({ email: userEmail });
+
+      if (user) {
+        const favoriteJobs = user.favoriteJobs || [];
+        res.send(favoriteJobs);
+      } else {
+        res.status(404).send({
+          message: "User not found.",
+          status: false,
+        });
+      }
+    });
+
+    app.delete("/favorite-job/:email/:jobId", async (req, res) => {
+      const userEmail = req.params.email;
+      const jobId = req.params.jobId;
+
+      // Remove the job ID from the user's favoriteJobs array
+      const result = await usersCollection.updateOne(
+        { email: userEmail },
+        { $pull: { favoriteJobs: jobId } }
+      );
+
+      if (result.modifiedCount > 0) {
+        res.send({ status: true });
+      } else {
+        res.status(404).send({
+          message: "Job not found in favorites.",
+          status: false,
+        });
+      }
+    });
 
     // post a job
     app.post("/post-job", async (req, res) => {
-        const body = req.body;
-        body.createdAt = new Date();
-        // console.log(body);
-        const result = await jobsCollection.insertOne(body);
-        if (result?.insertedId) {
-          return res.status(200).send(result);
-        } else {
-          return res.status(404).send({
-            message: "can not insert try again leter",
-            status: false,
-          });
-        }
-      });
+      const body = req.body;
+      body.createdAt = new Date();
+      // console.log(body);
+      const result = await jobsCollection.insertOne(body);
+      if (result?.insertedId) {
+        return res.status(200).send(result);
+      } else {
+        return res.status(404).send({
+          message: "can not insert try again leter",
+          status: false,
+        });
+      }
+    });
 
-
-      // get all jobs 
+    // get all jobs
     app.get("/all-jobs", async (req, res) => {
       const jobs = await jobsCollection
         .find({})
@@ -72,7 +127,7 @@ async function run() {
       res.send(jobs);
     });
 
-    // get jobs based on email for my job listing 
+    // get jobs based on email for my job listing
     app.get("/myJobs/:email", async (req, res) => {
       // console.log("email---", req.params.email);
       const jobs = await jobsCollection
@@ -83,14 +138,13 @@ async function run() {
       res.send(jobs);
     });
 
-
     // delete a job
-    app.delete("/job/:id", async(req, res) => {
+    app.delete("/job/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const result = await jobsCollection.deleteOne(filter);
       res.send(result);
-    })
+    });
 
     // updata a job
     app.patch("/update-job/:id", async (req, res) => {
@@ -100,7 +154,7 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
-            ...jobData
+          ...jobData,
         },
       };
       const options = { upsert: true };
@@ -110,7 +164,9 @@ async function run() {
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -118,11 +174,10 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
