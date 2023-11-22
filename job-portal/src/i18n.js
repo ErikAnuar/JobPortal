@@ -6,6 +6,8 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        addToFavorites: "Add to favorites",
+        PostAJob: "Post a job",
         greeting: "Hello!",
         content: "Welcome to our application.",
         startSearch: "Start a search",
@@ -128,10 +130,13 @@ i18n.use(initReactI18next).init({
         JobPostedBy: "Job Posted by",
         YourEmail: "Your email",
         PasteYourImageURL: "Paste your image URL: https://weshare.com/img1.jpg",
+        removeFromFavorites: "Remove from favorites",
       },
     },
     ru: {
       translation: {
+        addToFavorites: "Добавить в избранное",
+        PostAJob: "Опубликуй вакансию",
         greeting: "Привет!",
         content: "Добро пожаловать в наше приложение.",
         startSearch: "Начать поиск",
@@ -255,10 +260,14 @@ i18n.use(initReactI18next).init({
         YourEmail: "Ваш email",
         PasteYourImageURL:
           "Вставьте URL вашей картинки: https://weshare.com/img1.jpg",
+        removeFromFavorites: "Удалить из Избранного",
       },
     },
     kz: {
       translation: {
+        removeFromFavorites: "Таңдаулылардан өшіру",
+        addToFavorites: "Таңдаулыларға қосыңыз",
+        PostAJob: "Жұмысты жарияла",
         greeting: "Сәлем!",
         content: "Біздің қолданбама қош келдіңіз.",
         startSearch: "Іздеу бастау",

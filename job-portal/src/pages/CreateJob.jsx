@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "react-i18next";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import PageHeader from "../components/PageHeader"
 
 const CreateJob = () => {
   const { t } = useTranslation();
-
+  const { user } = useContext(AuthContext);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const {
@@ -52,6 +55,7 @@ const CreateJob = () => {
 
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+      <PageHeader title={t("PostAJob")} path={t("post job")} />
       {/* form */}
       <div className="bg-[#FAFAFA] py-10 px-4 lg:px-16">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -110,7 +114,9 @@ const CreateJob = () => {
           {/* 4th row */}
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">{t("JobPostingDate")}</label>
+              <label className="block mb-2 text-lg">
+                {t("JobPostingDate")}
+              </label>
               <input
                 className="create-job-input"
                 {...register("postingDate")}
@@ -120,7 +126,9 @@ const CreateJob = () => {
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">{t("workExperience")}</label>
+              <label className="block mb-2 text-lg">
+                {t("workExperience")}
+              </label>
               <select
                 {...register("experienceLevel")}
                 className="create-job-input"
@@ -135,7 +143,9 @@ const CreateJob = () => {
 
           {/* 5th row */}
           <div className="">
-            <label className="block mb-2 text-lg">{t("RequiredSkillSets")}</label>
+            <label className="block mb-2 text-lg">
+              {t("RequiredSkillSets")}
+            </label>
             <CreatableSelect
               className="create-job-input py-4"
               defaultValue={selectedOption}
@@ -158,7 +168,9 @@ const CreateJob = () => {
             </div>
 
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">{t("employmentType")}</label>
+              <label className="block mb-2 text-lg">
+                {t("employmentType")}
+              </label>
               <select
                 {...register("employmentType")}
                 className="create-job-input"
@@ -191,6 +203,7 @@ const CreateJob = () => {
               className="w-full pl-3 py-1.5 focus:outline-none"
               {...register("postedBy")}
               placeholder={t("YourEmail")}
+              value={user?.email}
             />
           </div>
 

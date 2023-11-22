@@ -11,6 +11,7 @@ import JobDetails from '../pages/JobDetails';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Favorites from '../pages/Favorites';
 
   const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/favorites",
+          element: <Favorites />,
         },
         {
           path: "/my-job",

@@ -37,6 +37,43 @@ async function run() {
     await jobsCollection.createIndex(indexKeys, indexOptions);
     await usersCollection.createIndex({ email: 1 }, { unique: true });
 
+    app.post("/create-user", async (req, res) => {
+      const { userEmail } = req.body;
+
+      try {
+        // Check if the user already exists
+        const existingUser = await usersCollection.findOne({
+          email: userEmail,
+        });
+
+        if (existingUser) {
+          return res.status(400).send({
+            message: "User with this email already exists.",
+            status: false,
+          });
+        }
+
+        // If the user doesn't exist, create a new user
+        const result = await usersCollection.insertOne({ email: userEmail });
+
+        if (result.insertedId) {
+          return res.status(200).send(result);
+        } else {
+          return res.status(500).send({
+            message: "Failed to create a new user. Try again later.",
+            status: false,
+          });
+        }
+      } catch (error) {
+        console.error("Error in /create-user endpoint:", error);
+        return res.status(500).send({
+          message: "Internal server error. Try again later.",
+          status: false,
+        });
+      }
+    });
+
+
     app.post("/favorite-job", async (req, res) => {
       const { userEmail, jobId } = req.body;
 
