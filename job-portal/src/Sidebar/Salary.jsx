@@ -1,50 +1,48 @@
 import React from "react";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { useTranslation } from "react-i18next";
 
 const Salary = ({ handleChange, handleClick }) => {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <h4 className="text-lg font-medium mb-2">Salary</h4>
-      {/* salaryType filtering */}
-      <div className="mb-4">
-        <Button onClickHandler={handleClick} value="" title="Hourly" />
-        <Button onClickHandler={handleClick} value="monthly" title="Monthly" />
-        <Button onClickHandler={handleClick} value="yearly" title="Yearly" />
-      </div>
+      <h4 className="text-lg font-medium mb-2">{t("salary")}</h4>
 
       <div>
         <label className="sidebar-label-container">
-          <input onChange={handleChange} type="radio" value="" name="test2" />
-          <span className="checkmark"></span>Any
+          <input onChange={handleChange} type="radio" value="" name="salary" />
+          <span className="checkmark"></span>
+          {t("any")}
         </label>
 
         <InputField
           handleChange={handleChange}
-          value={30}
-          title="< 30000k"
-          name="test2"
-        />
-
-        <InputField
-          handleChange={handleChange}
-          value={50}
-          title="< 50000k"
-          name="test2"
-        />
-
-        <InputField
-          handleChange={handleChange}
-          value={80}
-          title="< 80000k"
-          name="test2"
-        />
-
-        <InputField
-          handleChange={handleChange}
           value={100}
-          title="< 100000k"
-          name="test2"
+          title={t("lessThan100K")}
+          name="salary"
+        />
+
+        <InputField
+          handleChange={handleChange}
+          value={250}
+          title={t("lessThan250K")}
+          name="salary"
+        />
+
+        <InputField
+          handleChange={handleChange}
+          value={500}
+          title={t("lessThan500K")}
+          name="salary"
+        />
+
+        <InputField
+          handleChange={handleChange}
+          value={1000}
+          title={t("lessThan1M")}
+          name="salary"
         />
       </div>
     </div>
