@@ -35,6 +35,7 @@ const Navbar = () => {
     { path: "/my-job", title: t("myJobs") },
     { path: "/salary", title: t("salaryEstimate") },
     { path: "/post-job", title: t("postJob") },
+    { path: "/favorites", title: t("favorites") },
   ];
 
   return (

@@ -131,6 +131,7 @@ i18n.use(initReactI18next).init({
         YourEmail: "Your email",
         PasteYourImageURL: "Paste your image URL: https://weshare.com/img1.jpg",
         removeFromFavorites: "Remove from favorites",
+        favorites: "Favorites",
       },
     },
     ru: {
@@ -261,10 +262,12 @@ i18n.use(initReactI18next).init({
         PasteYourImageURL:
           "Вставьте URL вашей картинки: https://weshare.com/img1.jpg",
         removeFromFavorites: "Удалить из Избранного",
+        favorites: "Избранное",
       },
     },
     kz: {
       translation: {
+        favorites: "Таңдаулы",
         removeFromFavorites: "Таңдаулылардан өшіру",
         addToFavorites: "Таңдаулыларға қосыңыз",
         PostAJob: "Жұмысты жарияла",
