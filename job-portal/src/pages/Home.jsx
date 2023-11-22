@@ -1,11 +1,15 @@
+// Home.jsx
 import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Sidebar from "../Sidebar/Sidebar";
 import Jobs from "./Jobs";
 import Card from "../components/Card";
 import Newsletter from "../components/Newsletter";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +26,6 @@ const Home = () => {
       });
   }, []);
 
-  // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
 
   const handleInputChange = (event) => {
@@ -33,33 +36,26 @@ const Home = () => {
     (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
   );
 
-
-  // ----------- Radio Filtering -----------
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
-    // console.log(event.target.value);
   };
 
-  // ------------ Button Filtering -----------
   const handleClick = (event) => {
     setSelectedCategory(event.target.value);
   };
 
-  // Function to calculate the index range for the current page
   const calculatePageRange = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return { startIndex, endIndex };
   };
 
-  // Function to handle next page
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredItems.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Function to handle previous page
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -68,17 +64,12 @@ const Home = () => {
 
   const filteredData = (jobs, selected, query) => {
     let filteredJobs = jobs;
-    // Filtering Input Items
 
-    console.log(filteredItems)
     if (query) {
       filteredJobs = filteredItems;
     }
 
-    // Applying selected filter
     if (selected) {
-      console.log((selected));
-
       filteredJobs = filteredJobs.filter(
         ({
           jobLocation,
@@ -92,13 +83,11 @@ const Home = () => {
           postingDate === selected ||
           parseInt(maxPrice) <= parseInt(selected) ||
           salaryType.toLowerCase() === selected.toLowerCase() ||
-         experienceLevel.toLowerCase() === selected.toLowerCase() ||
+          experienceLevel.toLowerCase() === selected.toLowerCase() ||
           employmentType.toLowerCase() === selected.toLowerCase()
       );
-      console.log(filteredJobs);
     }
 
-    // Slice the data based on the current page
     const { startIndex, endIndex } = calculatePageRange();
     filteredJobs = filteredJobs.slice(startIndex, endIndex);
 
@@ -117,18 +106,18 @@ const Home = () => {
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </div>
         <div className="col-span-2 bg-white p-4 rounded">
-          {isLoading ? ( // Loading indicator
-            <p className="font-medium">Loading...</p>
+          {isLoading ? (
+            <p className="font-medium">{t("loading")}</p>
           ) : result.length > 0 ? (
             <Jobs result={result} />
           ) : (
             <>
-              <h3 className="text-lg font-bold mb-2">{result.length} Jobs</h3>
-              <p>No data found</p>
+              <h3 className="text-lg font-bold mb-2">
+                {result.length} {t("jobs")}
+              </h3>
+              <p>{t("noDataFound")}</p>
             </>
           )}
-
-          {/* pagination block here */}
 
           {result.length > 0 ? (
             <div className="flex justify-center mt-4 space-x-8">
@@ -137,10 +126,10 @@ const Home = () => {
                 disabled={currentPage === 1}
                 className="hover:underline"
               >
-                Previous
+                {t("previous")}
               </button>
               <span className="mx-2">
-                Page {currentPage} of{" "}
+                {t("page")} {currentPage} {t("of")}{" "}
                 {Math.ceil(filteredItems.length / itemsPerPage)}
               </span>
               <button
@@ -150,7 +139,7 @@ const Home = () => {
                 }
                 className="hover:underline"
               >
-                Next
+                {t("next")}
               </button>
             </div>
           ) : (

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import {
-  FaFacebook,
   FaFacebookF,
   FaGoogle,
   FaInstagram,
@@ -8,12 +7,15 @@ import {
 } from "react-icons/fa6";
 import { AuthContext } from "../context/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
+// Import the useTranslation hook from react-i18next
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
-  const [errorMessage, seterrorMessage] = useState("");
-  const { signUpWithGmail, login } = useContext(AuthContext);
+  // Use the useTranslation hook
+  const { t } = useTranslation();
 
-  // console.log(signUpWithGmail);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { signUpWithGmail, login } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,23 +26,19 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    // console.log(email, password)
+
     login(email, password)
       .then((result) => {
-        // Signed in
         const user = result.user;
-        console.log(user);
-        alert("Login successful!");
+        alert(t("loginSuccessful"));
         navigate(from, { replace: true });
-        // ...
       })
       .catch((error) => {
         const errorMessage = error.message;
-        seterrorMessage("Please provide valid email & password!");
+        setErrorMessage(t("invalidEmailPassword"));
       });
   };
 
-  // login with google
   const handleRegister = () => {
     signUpWithGmail()
       .then((result) => {
@@ -57,21 +55,21 @@ const Login = () => {
           onSubmit={handleLogin}
           className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4"
         >
-          <h3 className="text-xl font-semibold mb-4">Please Login!</h3>
+          <h3 className="text-xl font-semibold mb-4">{t("loginTitle")}</h3>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email Address
+              {t("emailAddress")}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
-              placeholder="name@email.com"
+              placeholder={t("emailPlaceholder")}
             />
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
+              {t("password")}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -80,11 +78,8 @@ const Login = () => {
               placeholder="******************"
             />
 
-            {/* show errors */}
             {errorMessage ? (
-              <p className="text-red-500 text-xs italic">
-                Please choose a password.
-              </p>
+              <p className="text-red-500 text-xs italic">{errorMessage}</p>
             ) : (
               ""
             )}
@@ -93,52 +88,33 @@ const Login = () => {
             <input
               className="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
-              value="Sign in"
+              value={t("signIn")}
             />
 
             <a
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               href="#"
             >
-              Forgot Password?
+              {t("forgotPassword")}
             </a>
           </div>
 
-          {/* social login */}
           <div className="mt-8 text-center w-full mx-auto">
-            <p className="mb-4">Sign up with Social</p>
+            <p className="mb-4">{t("signUpWithSocial")}</p>
 
             <div className="flex items-center justify-center gap-4 w-full mx-auto">
               <button
-                className=" border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
+                className="border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
                 type="button"
                 onClick={handleRegister}
               >
                 <FaGoogle />
               </button>
-              <button
-                className=" border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaFacebookF />
-              </button>
-              <button
-                className=" border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaLinkedin />
-              </button>
-              <button
-                className=" border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaInstagram />
-              </button>
             </div>
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
-          &copy;2023 JobPortal. All rights reserved.
+          &copy;2023 {t("jobPortal")}. {t("allRightsReserved")}
         </p>
       </div>
     </div>

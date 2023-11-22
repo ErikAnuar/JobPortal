@@ -1,16 +1,17 @@
 import React from "react";
-import { FiMapPin, FiSearch } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const Banner = ({ handleInputChange, query }) => {
+  const { t } = useTranslation(); // useTranslation hook
+
   return (
     <div className="max-w-screen-2xl container mx-auto xl:px-24 md:py-20 py-14 px-4">
       <h1 className="text-5xl font-bold text-primary mb-3">
-        Find your <span className="text-blue">new job</span> today
+        {t("findYour")} <span className="text-blue">{t("newJob")}</span>{" "}
+        {t("today")}
       </h1>
-      <p className="text-lg text-black/70 mb-8">
-        Thousands of jobs in the computer, engineering and technology sectors
-        are waiting for you.
-      </p>
+      <p className="text-lg text-black/70 mb-8">{t("thousandsOfJobs")}</p>
 
       <form className="">
         <div className="flex justify-start md:flex-row flex-col md:gap-0 gap-4">
@@ -20,7 +21,7 @@ const Banner = ({ handleInputChange, query }) => {
               name="username"
               id="username"
               className="block flex-1 border-0 bg-transparent py-1.5 pl-8 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="What position are you looking for ?"
+              placeholder={t("positionLookingFor")}
               onChange={handleInputChange}
               value={query}
             />
@@ -31,7 +32,7 @@ const Banner = ({ handleInputChange, query }) => {
             type="submit"
             className="bg-blue py-2 px-8 text-white md:rounded-e-md md:rounded-s-none rounded"
           >
-            Search
+            {t("search")}
           </button>
         </div>
       </form>

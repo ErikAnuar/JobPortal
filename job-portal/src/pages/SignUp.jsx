@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGoogle, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { AuthContext } from "../context/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { createUser, signUpWithGmail } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,12 +23,12 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        alert("Sign Up successful!");
+        alert(t("signUpSuccessful"));
         navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setErrorMessage("Please provide a valid email and password.");
+        setErrorMessage(t("provideValidEmailPassword"));
       });
   };
 
@@ -46,10 +48,10 @@ const SignUp = () => {
           onSubmit={handleSignUp}
           className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4"
         >
-          <h3 className="text-xl font-semibold mb-4">Sign Up Now!</h3>
+          <h3 className="text-xl font-semibold mb-4">{t("signUpNow")}</h3>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email Address
+              {t("emailAddress")}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -60,7 +62,7 @@ const SignUp = () => {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
+              {t("password")}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -76,12 +78,12 @@ const SignUp = () => {
             <input
               className="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
-              value="Sign Up"
+              value={t("signUp")}
             />
           </div>
 
           <div className="mt-8 text-center w-full mx-auto">
-            <p className="mb-4">Sign up with Social</p>
+            <p className="mb-4">{t("signUpWithSocial")}</p>
 
             <div className="flex items-center justify-center gap-4 w-full mx-auto">
               <button
@@ -91,29 +93,11 @@ const SignUp = () => {
               >
                 <FaGoogle />
               </button>
-              <button
-                className="border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaFacebookF />
-              </button>
-              <button
-                className="border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaLinkedin />
-              </button>
-              <button
-                className="border-2 text-blue hover:text-white hover:bg-blue font-bold p-3 rounded-full focus:outline-none focus:shadow-outline flex items-center gap-2"
-                type="button"
-              >
-                <FaInstagram />
-              </button>
             </div>
           </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
-          &copy;2023 JobPortal. All rights reserved.
+          &copy;2023 JobPortal. {t("allRightsReserved")}
         </p>
       </div>
     </div>
