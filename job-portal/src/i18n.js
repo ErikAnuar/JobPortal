@@ -280,9 +280,9 @@ i18n.use(initReactI18next).init({
         logIn: "Кіру",
         signUp: "Тіркелу",
         logOut: "Шығу",
-        findYour: "Тапсырысыз",
-        newJob: "жұмыс",
-        today: "бүгін",
+        findYour: "Өз",
+        newJob: "жұмысыңды",
+        today: "бүгін тап",
         thousandsOfJobs:
           "Әртүрлі салалардағы мыңдаған бос жұмыс орындары күтуде.",
         positionLookingFor: "Сіз қандай позицияны іздейсіз?",

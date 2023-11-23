@@ -62,7 +62,7 @@ const Favorites = () => {
   };
 
   const filteredItems = jobs.filter(
-    (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    (job) => job.jobTitle?.toLowerCase().indexOf(query.toLowerCase()) !== -1
   );
 
   const handleChange = (event) => {
